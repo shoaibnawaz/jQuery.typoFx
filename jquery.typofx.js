@@ -39,15 +39,17 @@
 })(jQuery);
 
 jQuery.typoFx.registerFx({ 
-    name: 'faisal', 
+    name: 'concentrate', 
     config: { speed: 1000, delay: 500 }, 
     fx: function( textNode ){
-        var name = "faisal";
+        var name = "concentrate";
         var config = jQuery.typoFx.config();
         var fxconfig = config[name];
         var $tn = $(textNode);
-        $tn.html( $tn.text( ).replace( /([\S])/g,'<span>$1</span>' ) );
-        $tn.css('position','relative');
+        var $wrap = $('<div>');
+        $wrap.append( $tn.text( ).replace( /([\S])/g,'<span>$1</span>' ) );
+        $wrap.css('position','relative');
+        $tn.html($wrap).css({position: 'absolute' });
         $('span',$tn).stop().css({position:'relative',
             opacity:0,
             fontSize:84,
@@ -58,10 +60,10 @@ jQuery.typoFx.registerFx({
 });
 
 jQuery.typoFx.registerFx({ 
-    name: 'junaid', 
+    name: 'burst', 
     config: { speed: 350, delay: 100, topOffset: -35, leftOffset: 5, fontSize: 84 ,opacity: 0}, 
     fx: function( textNode ){
-        var name = "junaid";
+        var name = "burst";
         var config = jQuery.typoFx.config();
         var fxconfig = config[name];
         var positions = [];   
@@ -84,7 +86,7 @@ jQuery.typoFx.registerFx({
 });
 
 jQuery.typoFx.registerFx({
-    name: 'khalid',
+    name: 'encounter',
     config: {
         yOffset: 50,
         speed: 500,
@@ -93,7 +95,7 @@ jQuery.typoFx.registerFx({
         fontSize: 84
     },
     fx: function(textNode){
-        var name = "khalid";
+        var name = "encounter";
         var config = jQuery.typoFx.config();
         var fxconfig = config[name];
         var $tn = $(textNode);
@@ -110,7 +112,12 @@ jQuery.typoFx.registerFx({
             $.extend(true, initialEffects, fxconfig);            
         }).each(function(i){
             $(this).stop().css(initialEffects).delay(i*fxconfig.delay).
-                animate( {opacity:1,fontSize:12,top:positions[i].top,left:positions[i].left},fxconfig.speed );
+                animate( {opacity:1,fontSize:12,top:positions[i].top,left:positions[i].left},{ 
+                    speed: fxconfig.speed,
+                    step: function(now, fx){
+                        //console.debug(fx.prop);
+                    }
+                });
         });
 
     }
